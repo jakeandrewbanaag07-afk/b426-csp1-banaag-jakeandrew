@@ -14,9 +14,7 @@ public class ArtistServiceImpl implements ArtistService {
         this.artistRepository = artistRepository;
     }
 
-    // ========================================
-    // VALIDATION METHODS
-    // ========================================
+
 
     private void validateId(int id) {
 
@@ -49,27 +47,21 @@ public class ArtistServiceImpl implements ArtistService {
         return keyword.trim();
     }
 
-    // ========================================
-    // GET ACTIVE ARTISTS
-    // ========================================
+
 
     @Override
     public List<Artist> getAllActiveArtists() {
         return artistRepository.findAllActive();
     }
 
-    // ========================================
-    // GET ARCHIVED ARTISTS
-    // ========================================
+
 
     @Override
     public List<Artist> getAllArchivedArtists() {
         return artistRepository.findAllArchived();
     }
 
-    // ========================================
-    // CREATE ARTIST
-    // ========================================
+
 
     @Override
     public void createArtist(String name) {
@@ -85,9 +77,7 @@ public class ArtistServiceImpl implements ArtistService {
         }
     }
 
-    // ========================================
-    // UPDATE ARTIST
-    // ========================================
+
 
     @Override
     public void updateArtist(int id, String name) {
@@ -104,9 +94,6 @@ public class ArtistServiceImpl implements ArtistService {
         }
     }
 
-    // ========================================
-    // DELETE ARTIST
-    // ========================================
 
     @Override
     public void deleteArtist(int id) {
@@ -120,9 +107,6 @@ public class ArtistServiceImpl implements ArtistService {
         }
     }
 
-    // ========================================
-    // ARCHIVE ARTIST
-    // ========================================
 
     @Override
     public void archiveArtist(int id) {
@@ -136,9 +120,7 @@ public class ArtistServiceImpl implements ArtistService {
         }
     }
 
-    // ========================================
-    // RESTORE ARTIST
-    // ========================================
+
 
     @Override
     public void restoreArtist(int id) {
@@ -152,9 +134,7 @@ public class ArtistServiceImpl implements ArtistService {
         }
     }
 
-    // ========================================
-    // SEARCH ARTISTS
-    // ========================================
+
 
     @Override
     public List<Artist> searchArtists(String keyword) {

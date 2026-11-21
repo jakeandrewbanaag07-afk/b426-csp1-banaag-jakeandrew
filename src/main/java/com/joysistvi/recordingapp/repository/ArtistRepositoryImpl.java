@@ -19,36 +19,27 @@ public class ArtistRepositoryImpl implements ArtistRepository {
         this.dbConnection = dbConnection;
     }
 
-    // ========================================
-    // FIND ALL ACTIVE ARTISTS
-    // ========================================
+
 
     @Override
     public List<Artist> findAllActive() {
         return findArtists(0, null);
     }
 
-    // ========================================
-    // FIND ALL ARCHIVED ARTISTS
-    // ========================================
+
 
     @Override
     public List<Artist> findAllArchived() {
         return findArtists(1, null);
     }
 
-    // ========================================
-    // SEARCH ARTISTS
-    // ========================================
 
     @Override
     public List<Artist> searchByName(String keyword) {
         return findArtists(0, keyword);
     }
 
-    // ========================================
-    // SHARED SELECT METHOD
-    // ========================================
+
 
     private List<Artist> findArtists(int archived, String keyword) {
 
@@ -91,9 +82,7 @@ public class ArtistRepositoryImpl implements ArtistRepository {
         return artists;
     }
 
-    // ========================================
-    // CREATE ARTIST
-    // ========================================
+
 
     @Override
     public boolean save(Artist artist) {
@@ -113,9 +102,7 @@ public class ArtistRepositoryImpl implements ArtistRepository {
         }
     }
 
-    // ========================================
-    // UPDATE ARTIST
-    // ========================================
+
 
     @Override
     public boolean update(Artist artist) {
@@ -136,9 +123,7 @@ public class ArtistRepositoryImpl implements ArtistRepository {
         }
     }
 
-    // ========================================
-    // DELETE ARTIST
-    // ========================================
+
 
     @Override
     public boolean deleteById(int id) {
@@ -148,9 +133,6 @@ public class ArtistRepositoryImpl implements ArtistRepository {
         return executeUpdate(sql, id);
     }
 
-    // ========================================
-    // ARCHIVE ARTIST
-    // ========================================
 
     @Override
     public boolean archiveById(int id) {
@@ -161,9 +143,7 @@ public class ArtistRepositoryImpl implements ArtistRepository {
         return executeUpdate(sql, id);
     }
 
-    // ========================================
-    // RESTORE ARTIST
-    // ========================================
+
 
     @Override
     public boolean restoreById(int id) {
@@ -174,9 +154,7 @@ public class ArtistRepositoryImpl implements ArtistRepository {
         return executeUpdate(sql, id);
     }
 
-    // ========================================
-    // SHARED UPDATE METHOD
-    // ========================================
+
 
     private boolean executeUpdate(String sql, int id) {
 

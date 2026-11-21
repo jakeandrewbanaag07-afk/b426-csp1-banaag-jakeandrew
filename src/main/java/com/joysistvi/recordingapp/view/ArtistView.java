@@ -103,18 +103,18 @@ public class ArtistView {
     public void promptRestoreArtist() {
 
         try {
-            // Get archived artists first.
+
             List<Artist> artists = artistService.getAllArchivedArtists();
 
             System.out.println("\n========== ARCHIVED ARTISTS ==========");
 
-            // Stop if there are no archived artists.
+
             if (artists.isEmpty()) {
                 System.out.println("No archived artists available.");
                 return;
             }
 
-            // Display archived artists.
+
             System.out.printf("%-10s %-25s%n", "ID", "ARTIST NAME");
 
             for (Artist artist : artists) {
@@ -123,7 +123,7 @@ public class ArtistView {
                         artist.getName());
             }
 
-            // Ask for the ID only if archived artists exist.
+
             System.out.print("Enter artist ID to restore: ");
             int id = Integer.parseInt(scanner.nextLine());
 
