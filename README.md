@@ -1,7 +1,5 @@
 # 🎵 RecordingStudioConsoleApp
 
-> 📝 **STUDENT NOTES (delete this whole block before pushing):** Every line marked `📝 REPLACE` must be changed to match *your own* project. Read the whole file, replace the placeholders `<like-this>`, and remove all notes. Do not leave any `📝` text in your final README.
-
 A Java console application for managing a recording studio's catalog of **artists, albums, songs, users, and playlists**. Built with **JDBC and MySQL** using a clean **3-tier architecture**, and built as my final project for the **Programming (Java) NC III** course.
 
 ---
@@ -93,7 +91,6 @@ The **model** package (plain Java objects) and **config** package (database conn
 
 ## Project Structure
 
-> 📝 **REPLACE:** Make this tree match your actual folders and file names. Remove entries you did not create and add any extra ones (for example, `Menu.java` or utility classes).
 
 ```
 RecordingStudioConsoleApp
@@ -211,9 +208,9 @@ erDiagram
 - Add / Remove Songs in Playlist
 
 **Admin:**
-- Manage Artists
-- Manage Albums
 - Manage Songs (including archive and restore)
+- Manage Artist
+- Manage Albums
 - Manage Users
 
 > Self-registration always creates an account with role `USER`. Admin accounts are created manually in the database (see below).
@@ -232,11 +229,10 @@ erDiagram
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-github-username>/<your-repository-name>.git
-cd <your-repository-name>
+git clone https://github.com/jakeandrewbanaag07-afk/<b426-csp1-banaag-jakeandrew>.git
+cd <b426-csp1-banaag-jakeandrew>
 ```
 
-> 📝 **REPLACE:** your GitHub username and your repository name.
 
 ### 2. Create the database
 
@@ -257,8 +253,6 @@ private static final String URL = "jdbc:mysql://localhost:3306/recording_studio"
 private static final String USER = "root";
 private static final String PASSWORD = "your_password_here";
 ```
-
-> 📝 **REPLACE:** If your `DbConnection` class or constants are named differently, update the path and code above.
 
 > ⚠️ Never commit real passwords to GitHub. Keep your local credentials out of version control, or load them from environment variables.
 
@@ -353,7 +347,6 @@ Use the exact `.jar` filename shown by `dir`.
 
 ## Sample Usage
 
-> 📝 **REPLACE:** The output below is only an example. Run your own app, copy your real menus, and add screenshots (put images in a `screenshots/` folder and use `![Login screen](screenshots/login.png)`).
 
 ```
 ===== Welcome to Recording Studio =====
@@ -363,10 +356,10 @@ Use the exact `.jar` filename shown by `dir`.
 Choose: 1
 
 ===== Songs =====
-1. View all songs
-2. Search song
-3. Add song              (Admin only)
-4. Update song           (Admin only)
+1. View all Active songs
+2. Create song
+3. Update song           (Admin only)
+4. Search song           (Admin only)
 5. Archive song          (Admin only)
 6. Restore song          (Admin only)
 7. View archived songs   (Admin only)
@@ -374,22 +367,19 @@ Choose: 1
 
 ----- Update Song -----
 ID    Title                     Genre           Length   Album
-1     Ligaya                    OPM Rock        4:40     Cutterpillow
+1     Kathang Isip              Folk Pop        5:18     Limasawa Street 
 Song ID to update: 1
-New Title [Ligaya] (Enter to keep):
+New Title [Kathang Isip] (Enter to keep):
 ```
 
 ---
 
 ## Design Decisions
 
-> 📝 **REPLACE / REVIEW:** Keep only the decisions that match what *you* actually implemented. Add your own decisions and explain why you made them.
 
 - **Role stored as `VARCHAR`** (`USER` or `ADMIN`) instead of a boolean or enum to keep the code simple and beginner-friendly.
 - **Soft delete for songs** (`is_archived`) so playlists and history are not broken by a delete.
-- **BCrypt for passwords**: plain-text passwords are never stored.
 - **Service owns validation, View owns messages**: services stay silent and return results, so the user never sees the same error twice.
-- **Repositories never print success messages**: they only log SQL errors.
 - **Interfaces for services and repositories** so implementations can be swapped (for example, for testing).
 - **Song `length` stored as text** (for example, `3:45`) for simplicity.
 
@@ -410,14 +400,13 @@ New Title [Ligaya] (Enter to keep):
 
 ## Author
 
-**<Your Full Name>**
-Student, Programming (Java) NC III, Joysis Tech Voc Inc.
-GitHub: [@<your-github-username>](https://github.com/<your-github-username>)
-
-> 📝 **REPLACE:** your name, your GitHub username, and your batch or section if required. Credit your instructor or any resources you used (optional).
+**<Jake Andrew A. Banaag>**
+Jake Andrew Banaag, Batch4,Programming (Java) NC III, Joysis Tech Voc Inc.
+GitHub: [@<jakeandrewbanaag07-afk>](https://github.com/jakeandrewbanaag07-afk>)
 
 ---
 
 ## Acknowledgements
 
 - Course instructor: Jareth Ronquillo, Joysis Tech Voc Inc.
+
