@@ -11,36 +11,40 @@ import java.util.Scanner;
 // Entry Point
 public class App {
 
-    private final DbConnection dbConnection = new DbConnection();
-    private final Scanner scanner = new Scanner(System.in);
+    DbConnection dbConnection = new DbConnection();
+    Scanner scanner = new Scanner(System.in);
+    // Wiring
+    // 1. Wire Artist (Repository -> Service -> View)
+    ArtistRepository artistRepository = new ArtistRepositoryImpl(dbConnection);
+    ArtistService artistService = new ArtistServiceImpl(artistRepository);
+    ArtistView artistView = new ArtistView(artistService, scanner);
 
-    // Wiring (Repository -> Service -> View)
-    private final ArtistRepository artistRepository = new ArtistRepositoryImpl(dbConnection);
-    private final ArtistService artistService = new ArtistServiceImpl(artistRepository);
-    private final ArtistView artistView = new ArtistView(artistService, scanner);
+    // 2. Wire Album (Repository -> Service -> View)
+    AlbumRepository albumRepository = new AlbumRepositoryImpl(dbConnection);
+    AlbumService albumService = new AlbumServiceImpl(albumRepository);
+    AlbumView albumView = new AlbumView(albumService, scanner);
 
-    private final AlbumRepository albumRepository = new AlbumRepositoryImpl(dbConnection);
-    private final AlbumService albumService = new AlbumServiceImpl(albumRepository);
-    private final AlbumView albumView = new AlbumView(albumService, scanner);
+    // 3. Wire User (Repository -> Service -> View)
+    UserRepository userRepository = new UserRepositoryImpl(dbConnection);
+    UserService userService = new UserServiceImpl(userRepository);
+    UserView userView = new UserView(userService, scanner);
 
-    private final UserRepository userRepository = new UserRepositoryImpl(dbConnection);
-    private final UserService userService = new UserServiceImpl(userRepository);
-    private final UserView userView = new UserView(userService, scanner);
+    SongRepository songRepository = new SongRepositoryImpl(dbConnection);
+    SongService songService = new SongServiceImpl(songRepository);
+    SongView songView = new SongView(songService, scanner);
 
-    private final SongRepository songRepository = new SongRepositoryImpl(dbConnection);
-    private final SongService songService = new SongServiceImpl(songRepository);
-    private final SongView songView = new SongView(songService, scanner);
-
-    private final PlaylistRepository playlistRepository = new PlaylistRepositoryImpl(dbConnection);
-    private final PlaylistService playlistService = new PlaylistServiceImpl(playlistRepository);
-    private final PlaylistView playlistView = new PlaylistView(playlistService, scanner);
+    PlaylistRepository playlistRepository = new PlaylistRepositoryImpl(dbConnection);
+    PlaylistService playlistService = new PlaylistServiceImpl(playlistRepository);
+    PlaylistView playlistView = new PlaylistView(playlistService, songService, scanner);
 
     public static void main(String[] args) {
         App app = new App();
         app.run();
+
     }
 
     public void run() {
+
         while (true) {
             User currentUser = showAuthMenuAndAuthenticate();
             if (currentUser == null) {
@@ -48,42 +52,34 @@ public class App {
                 break;
             }
 
-            // Any logged-in user can enter the dashboard
+            // Any logged-in user enter the album menu
             System.out.println("\nWelcome, " + currentUser.getUsername() + " (" + currentUser.getRole() + ")!");
             dashboard();
             System.out.println("\nLogged out " + currentUser.getUsername() + ".");
         }
     }
 
-    // Main menu shown after login. Stays open until the user chooses 0 (Back / Logout).
-    private void dashboard() {
-        while (true) {
-            System.out.println("\n=== DASHBOARD ===");
-            System.out.println("1. Song Management");
-            System.out.println("2. Artist Management");
-            System.out.println("3. Album Management");
-            System.out.println("4. Users Management");
-            System.out.println("5. Playlist Management");
-            System.out.println("0. Back");
+    // Authorization vs Authentication
+    private void dashboard(){
+        System.out.println("1. Song Management");
+        System.out.println("2. Artist Management");
+        System.out.println("3. Album Management");
+        System.out.println("4. Users Management");
+        System.out.println("0. Back");
 
-            int choice = promptForInt("Choice: ");
-
-            switch (choice) {
-                case 1 -> songView.handleMenu();
-                case 2 -> artistView.handleMenu();
-                case 3 -> albumView.handleMenu();
-                case 4 -> userView.handleMenu();
-                case 5 -> playlistView.handleMenu();
-                case 0 -> {
-                    return;
-                }
-                default -> System.out.println("Invalid choice. Please try again.");
-            }
+        int choice = promptForInt("Choice: ");
+        switch (choice) {
+            case 1 -> songView.handleMenu();
+            case 2 -> artistView.handleMenu();
+            case 3 -> albumView.handleMenu();
+            case 4 -> albumView.handleMenu();
+            //case 5 -> playlistView.handleMenu();
+            case 0 -> {return;}
         }
     }
 
-
     private User showAuthMenuAndAuthenticate() {
+
         while (true) {
             System.out.println("\n=== RECORDING STUDIO APP ===");
             System.out.println("1. Login");
@@ -92,20 +88,26 @@ public class App {
 
             int choice = promptForInt("Choose an option: ");
             switch (choice) {
-                case 1 -> {
+                case 1:
                     User loggedInUser = userView.promptLogin();
-                    if (loggedInUser != null) {
+
+                    if (loggedInUser != null ) {
                         return loggedInUser;
                     }
-                }
-                case 2 -> userView.promptCreateUser();
-                case 0 -> {
+                    break;
+
+                case 2:
+                    userView.promptCreateUser();
+                    break;
+                case 0:
                     return null;
-                }
-                default -> System.out.println("Invalid option. Please try again.");
+                default:
+                    System.out.println("Invalid option. Please try again.");
+                    break;
             }
         }
     }
+
 
     private int promptForInt(String promptMessage) {
         while (true) {
@@ -119,6 +121,8 @@ public class App {
         }
     }
 }
+
+
 
 
 /*

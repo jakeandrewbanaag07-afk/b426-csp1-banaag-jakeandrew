@@ -2,7 +2,6 @@ package com.joysistvi.recordingapp.view;
 
 import com.joysistvi.recordingapp.model.Album;
 import com.joysistvi.recordingapp.service.AlbumService;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,7 +14,6 @@ public class AlbumView {
         this.scanner = scanner;
     }
 
-    // Renamed from handleAlbumMenu() so App can call albumView.handleMenu()
     public void handleMenu() {
         while (true) {
             System.out.println("\n=== MANAGE ALBUMS ===");
@@ -37,10 +35,9 @@ public class AlbumView {
                 case 5 -> promptArchiveAlbum();
                 case 6 -> promptRestoreAlbum();
                 case 7 -> promptDeleteAlbum();
-                case 0 -> {
-                    return;
-                }
+                case 0 -> { return; }
                 default -> System.out.println("Invalid option. Please try again.");
+
             }
         }
     }
@@ -136,21 +133,41 @@ public class AlbumView {
     }
 
     private void printAlbumTable(String header, List<Album> albums, String emptyMessage) {
-        System.out.println(header);
-        System.out.printf("%-4s %-22s %-8s %-20s%n", "ID", "Album Name", "Year", "Artist");
+        String border = "+------+---------------------------+";
+
+        System.out.println("\n" + header);
+        System.out.println(border);
+        System.out.printf("| %-4s | %-25s |%n", "ID", "Album Name");
+        System.out.println(border);
 
         if (albums == null || albums.isEmpty()) {
-            System.out.println(emptyMessage);
+            String message = (emptyMessage != null && !emptyMessage.isEmpty())
+                    ? emptyMessage
+                    : "No artists found.";
+            System.out.printf("| %-32s |%n", truncate(message, 32));
+            System.out.println(border);
             return;
         }
 
         for (Album album : albums) {
-            System.out.printf("%-4d %-22s %-8d %-20s%n",
-                    album.getId(),
-                    album.getName(),
-                    album.getYear(),
-                    album.getArtistName());
+            String name = album.getName() != null ? album.getName() : "";
+            System.out.printf("| %-4d | %-25s |%n", album.getId(), truncate(name, 25));
         }
+
+        System.out.println(border);
+    }
+
+    private String truncate(String text, int maxLength) {
+        if (text == null) {
+            return "";
+        }
+        if (text.length() <= maxLength) {
+            return text;
+        }
+        if (maxLength <= 3) {
+            return text.substring(0, maxLength);
+        }
+        return text.substring(0, maxLength - 3) + "...";
     }
 
     private int promptForInt(String promptMessage) {

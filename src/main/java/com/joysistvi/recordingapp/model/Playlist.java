@@ -1,8 +1,6 @@
-
 package com.joysistvi.recordingapp.model;
 
 public class Playlist {
-
     private int id;
     private String name;
     private int userId;
@@ -19,8 +17,7 @@ public class Playlist {
         this.username = username;
     }
 
-    public Playlist(int id, String name, int userId,
-                    String username, boolean archived) {
+    public Playlist(int id, String name, int userId, String username, boolean archived) {
         this.id = id;
         this.name = name;
         this.userId = userId;
