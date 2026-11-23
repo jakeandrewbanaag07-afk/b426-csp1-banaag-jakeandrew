@@ -1,146 +1,83 @@
-
 package com.joysistvi.recordingapp.service;
 
 import com.joysistvi.recordingapp.model.Artist;
 import com.joysistvi.recordingapp.repository.ArtistRepository;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArtistServiceImpl implements ArtistService {
-
     private final ArtistRepository artistRepository;
 
     public ArtistServiceImpl(ArtistRepository artistRepository) {
         this.artistRepository = artistRepository;
     }
 
-
-
-    private void validateId(int id) {
-
-        if (id <= 0) {
-            throw new IllegalArgumentException(
-                    "Artist ID must be greater than zero."
-            );
-        }
-    }
-
-    private String validateName(String name) {
-
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Artist name cannot be empty."
-            );
-        }
-
-        return name.trim();
-    }
-
-    private String validateKeyword(String keyword) {
-
-        if (keyword == null || keyword.trim().isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Search keyword cannot be empty."
-            );
-        }
-
-        return keyword.trim();
-    }
-
-
-
     @Override
     public List<Artist> getAllActiveArtists() {
         return artistRepository.findAllActive();
     }
-
-
 
     @Override
     public List<Artist> getAllArchivedArtists() {
         return artistRepository.findAllArchived();
     }
 
-
-
     @Override
-    public void createArtist(String name) {
-
-        name = validateName(name);
-
-        Artist artist = new Artist(name);
-
-        if (!artistRepository.save(artist)) {
-            throw new IllegalStateException(
-                    "Failed to create artist."
-            );
+    public boolean createArtist(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            System.out.println("Validation Error: Artist name cannot be blank.");
+            return false;
         }
+        return artistRepository.save(new Artist(name.trim()));
     }
 
-
-
     @Override
-    public void updateArtist(int id, String name) {
-
-        validateId(id);
-        name = validateName(name);
-
-        Artist artist = new Artist(id, name);
-
-        if (!artistRepository.update(artist)) {
-            throw new IllegalStateException(
-                    "Artist not found or update failed."
-            );
+    public boolean updateArtist(int id, String name) {
+        if (id <= 0) {
+            System.out.println("Validation Error: Artist ID must be greater than 0.");
+            return false;
         }
+        if (name == null || name.trim().isEmpty()) {
+            System.out.println("Validation Error: Artist name cannot be blank.");
+            return false;
+        }
+        Artist updated = new Artist(id, name.trim());
+        return artistRepository.update(updated);
     }
 
-
     @Override
-    public void deleteArtist(int id) {
-
-        validateId(id);
-
-        if (!artistRepository.deleteById(id)) {
-            throw new IllegalStateException(
-                    "Artist not found or delete failed."
-            );
+    public boolean deleteArtist(int id) {
+        if (id <= 0) {
+            System.out.println("Validation Error: Artist ID must be greater than 0.");
+            return false;
         }
+        return artistRepository.deleteById(id);
     }
 
-
     @Override
-    public void archiveArtist(int id) {
-
-        validateId(id);
-
-        if (!artistRepository.archiveById(id)) {
-            throw new IllegalStateException(
-                    "Artist not found or already archived."
-            );
+    public boolean archiveArtist(int id) {
+        if (id <= 0) {
+            System.out.println("Validation Error: Artist ID must be greater than 0.");
+            return false;
         }
+        return artistRepository.archiveById(id);
     }
 
-
-
     @Override
-    public void restoreArtist(int id) {
-
-        validateId(id);
-
-        if (!artistRepository.restoreById(id)) {
-            throw new IllegalStateException(
-                    "Artist not found or not archived."
-            );
+    public boolean restoreArtist(int id) {
+        if (id <= 0) {
+            System.out.println("Validation Error: Artist ID must be greater than 0.");
+            return false;
         }
+        return artistRepository.restoreById(id);
     }
-
-
 
     @Override
     public List<Artist> searchArtists(String keyword) {
-
-        keyword = validateKeyword(keyword);
-
-        return artistRepository.searchByName(keyword);
+        if (keyword == null || keyword.trim().isEmpty()) {
+            System.out.println("Validation Error: Search keyword cannot be blank.");
+            return new ArrayList<>();
+        }
+        return artistRepository.searchByName(keyword.trim());
     }
 }

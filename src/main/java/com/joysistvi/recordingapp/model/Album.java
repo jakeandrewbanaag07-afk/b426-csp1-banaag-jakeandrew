@@ -1,8 +1,6 @@
-
 package com.joysistvi.recordingapp.model;
 
 public class Album {
-
     private int id;
     private String name;
     private int year;
@@ -13,21 +11,20 @@ public class Album {
     public Album() {
     }
 
-    public Album(String name, int year, int artistId) {
-        this.name = name;
-        this.year = year;
-        this.artistId = artistId;
-    }
-
-    public Album(int id, String name, int year, int artistId,
-                 String artistName, boolean archived) {
-
+    public Album(int id, String name, int year, int artistId, String artistName) {
         this.id = id;
         this.name = name;
         this.year = year;
         this.artistId = artistId;
         this.artistName = artistName;
-        this.archived = archived;
+
+    }
+
+    public Album(String name, int year, int artistId) {
+        this.name = name;
+        this.year = year;
+        this.artistId = artistId;
+
     }
 
     public int getId() {

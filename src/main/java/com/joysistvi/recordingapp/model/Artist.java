@@ -1,13 +1,10 @@
 package com.joysistvi.recordingapp.model;
 
+// Model(Presentation Tier) -> representing database entities
 public class Artist {
 
     private int id;
     private String name;
-    private boolean archived;
-
-    public Artist() {
-    }
 
     public Artist(String name) {
         this.name = name;
@@ -16,12 +13,6 @@ public class Artist {
     public Artist(int id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public Artist(int id, String name, boolean archived) {
-        this.id = id;
-        this.name = name;
-        this.archived = archived;
     }
 
     public int getId() {
@@ -38,13 +29,5 @@ public class Artist {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isArchived() {
-        return archived;
-    }
-
-    public void setArchived(boolean archived) {
-        this.archived = archived;
     }
 }
