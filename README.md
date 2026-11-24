@@ -402,7 +402,7 @@ New Title [Kathang Isip] (Enter to keep):
 
 **<Jake Andrew A. Banaag>**
 Jake Andrew Banaag, Batch4,Programming (Java) NC III, Joysis Tech Voc Inc.
-GitHub: [@<jakeandrewbanaag07-afk>](https://github.com/jakeandrewbanaag07-afk>)
+GitHub: [(https://github.com/jakeandrewbanaag07-afk>)]
 
 ---
 
